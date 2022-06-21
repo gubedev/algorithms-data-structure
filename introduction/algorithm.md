@@ -170,3 +170,45 @@ In the Example 1 the complexity is **O(n^2)**, because a nested array iteration.
 In the Example 2 the complexity is **O(n log n)**, because order task is log n and then iterating once.
 
 In the Example 3 the complexity is **O(n)**, because iterating once.
+
+# Searching algorithms
+
+Once you have a good understanding about algorithmic complexity, the next good thing to know are popular algorithms used to solve very common programming tasks. So let's start with searching.
+
+When searching for a value in a data structure, there are different approaches we can take. We'll take a look at two of the most used options and compare them.
+
+## Linear search
+
+Linear search consists of iterating over the data structure one value at a time and checking if that value is the one we’re looking for. It’s probably the most intuitive kind of search and the best we can do if the data structure we’re using isn’t ordered.
+
+Let’s say we have an array of numbers and for this array we want to write a function that takes a number as the input and returns that number’s index in the array. In case it doesn’t exist in the array, it will return -1. A possible approach could be the following:
+
+```
+
+const arr = [1,2,3,4,5,6,7,8,9,10]
+
+const search = num => {
+    for (let i = 0; i < arr.length; i++) {
+        if (num === arr[i]) return i
+    }
+    return -1
+}
+
+console.log(search(6)) // 5
+console.log(search(11)) // -1
+
+```
+
+As the array isn’t ordered, we don’t have a way of knowing the approximate position of each value, so the best we can do is check one value at a time. The complexity of this algorithm is linear - O(n) since in the worst case scenario we will have to iterate over the whole array once to get the value we’re looking for.
+
+Linear search is the approach used by many built-in JavaScript methods like indexOf, includes, and findIndex.
+
+
+## Binary search
+
+When we have an ordered data structure, there’s a much more efficient approach we can take, binary search. What we do in binary search is the following:
+
+- Select the middle value of our data structure and “ask”, is this the value we’re looking for?
+- If not, we “ask” whether the value we’re looking for is greater or less than the middle value?
+- If it’s greater, we “discard” all the values smaller than the mid value. If - it’s smaller, we “discard” all the values greater than the mid value.
+And then we repeat the same operation until we find the given value or the remaining "piece" of the data structure can't be divided anymore.
