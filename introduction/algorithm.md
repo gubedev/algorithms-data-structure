@@ -212,3 +212,169 @@ When we have an ordered data structure, there’s a much more efficient approach
 - If not, we “ask” whether the value we’re looking for is greater or less than the middle value?
 - If it’s greater, we “discard” all the values smaller than the mid value. If - it’s smaller, we “discard” all the values greater than the mid value.
 And then we repeat the same operation until we find the given value or the remaining "piece" of the data structure can't be divided anymore.
+
+![Alt text](binary-search.png?raw=true "Title")
+
+What's so cool about binary search is that in each iteration we're discarding roughly half of the data structure. This makes search really quick and efficient. 👌
+
+Let’s say we have the same array (ordered) and we want to write the same function as before, which takes a number as the input and returns that number’s index in the array. In case it doesn’t exist in the array, it will return -1. A binary search approach could be the following:
+
+```
+
+const arr = [1,2,3,4,5,6,7,8,9,10]
+
+const search = num => {
+    // We'll use three pointers.
+    // One at the start of the array, one at the end and another at the middle.
+    let start = 0
+    let end = arr.length-1
+    let middle = Math.floor((start+end)/2)
+
+    // While we haven't found the number and the start pointer is equal or smaller to the end pointer
+    while (arr[middle] !== num && start <= end) {
+        // If the desired number is smaller than the middle, discard the bigger half of the array
+        if (num < arr[middle]) end = middle - 1
+        // If the desired number is bigger than the middle, discard the smaller half of the array
+        else start = middle + 1
+        // Recalculate the middle value
+        middle = Math.floor((start+end)/2)
+    }
+    // If we've exited the loop it means we've either found the value or the array can't be devided further
+    return arr[middle] === num ? middle : -1
+}
+
+console.log(search(6)) // 5
+console.log(search(11)) // -1
+
+```
+
+This approach may seem like “more code” at first, but potential iterations are actually a lot less than in linear search, and that’s because in each iteration we’re discarding roughly half of the data structure. The complexity of this algorithm is **Logarithmic — O(log n):**
+
+# Sorting algorithms
+
+When sorting data structures, there are many possible approaches we can take. Let’s take a look at some of the most used options and compare them.
+
+## Bubble sort
+
+Bubble sort iterates through the data structure and compares one pair of values at a time. If the order of those values is incorrect, it swaps its positions to correct it. The iteration is repeated until the data is ordered. This algorithm makes bigger values “bubble” up to the end of the array. 
+
+This algorithm has a **Quadratic – O(n²)** complexity since it will compare each value with the rest of the values one time.
+
+![Alt text](bubble-sort.png?raw=true "Title")
+
+A possible implementation could be the following:
+
+```
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+const bubbleSort = arr => {
+    // set a flag variable
+    let noSwaps
+	
+    // We will have a nested loop
+    // with a pointer iterating from right to left
+    for (let i = arr.length; i > 0; i--) {
+        noSwaps = true
+		// and another iterating from right to left
+        for (let j = 0; j < i-1; j++) {
+            // We compare the two pointers
+            if (arr[j] > arr[j+1]) {
+                let temp = arr[j]
+                arr[j] = arr[j+1]
+                arr[j+1] = temp
+                noSwaps = false
+            }
+        }
+        if (noSwaps) break
+    }
+}
+
+bubbleSort(arr)
+console.log(arr) // [1,2,3,4,5,6,7,8,9,10]
+
+```
+
+## Selection sort
+
+Selection sort is similar to bubble sort but instead of placing the bigger values at the end of the data structure, it focuses on placing the smaller values at the beginning. The steps it takes are the following:
+
+- Store the first item of the data structure as the minimum value.
+- Iterate through the data structure comparing each value with the minimum value. If a smaller value is found, it identifies this value as the new minimum value.
+- If the minimum value isn’t the first value of the data structure, it swaps the positions of the minimum value and the first value.
+- It repeats this iteration until the data structure is ordered.
+- This algorithm has a **Quadratic – O(n²)** complexity.
+
+![Alt text](selection-sort.png?raw=true "Title")
+
+A possible implementation could be the following:
+
+```
+
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+const selectionSort = arr => {
+    
+    for (let i = 0; i < arr.length; i++) {
+        let lowest = i
+        
+        for (let j = i+1; j < arr.length; j++) {
+            if (arr[j] < arr[lowest]) {
+                lowest = j
+            }
+        }
+
+        if (i !== lowest) {
+            let temp = arr[i]
+            arr[i] = arr[lowest]
+            arr[lowest] = temp
+        }
+    }
+}
+
+selectionSort(arr)
+console.log(arr) // [1,2,3,4,5,6,7,8,9,10]
+
+```
+
+## Insertion sort
+
+Insertion sort orders the data structure by creating an “ordered half” that is always correctly sorted, and iterates through the data structure picking each value and inserting it in the ordered half exactly in the place it should be.
+
+The steps it takes are the following:
+
+- It starts by picking the second element in the data structure.
+- It compares this element with the one before it and swap its positions if necessary.
+- It continues to the next element and if it’s not in the right position, it iterates through the “ordered half” to find its correct position and inserts it there.
+- It repeats the same process until the data structure is sorted.
+- This algorithm has a **Quadratic (O(n²))** complexity.
+
+![Alt text](insertion-sort.png?raw=true "Title")
+
+A possible implementation could be the following:
+
+
+
+```
+
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+const insertionSort = arr => {
+    let currentVal
+    
+    for (let i = 0; i < arr.length; i++) {
+        currentVal = arr[i]
+
+        for (var j = i-1; j >= 0 && arr[j] > currentVal; j--) {
+            arr[j+1] = arr[j]
+        }
+        
+        arr[j+1] = currentVal
+    }
+    
+    return arr
+}
+
+insertionSort(arr)
+console.log(arr) // [1,2,3,4,5,6,7,8,9,10]
+
+```
