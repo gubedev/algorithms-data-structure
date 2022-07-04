@@ -1,10 +1,8 @@
 # What is an algorithm?
- Is a finite sequence of rigorous instructions, typically used to solve a class of specific problems or to perform a computation. Algorithms are used as specifications for performing calculations and data processing.
 
-
+Is a finite sequence of rigorous instructions, typically used to solve a class of specific problems or to perform a computation. Algorithms are used as specifications for performing calculations and data processing.
 
 ## An example could be a recipe for cooking bread:
-
 
 ```
 1- Mix flower, salt, water and yeast
@@ -14,7 +12,6 @@
 ```
 
 ## An algorithm to identify if a word is a palindrome or not could be:
-
 
 ```
 function isPalindrome(word) {
@@ -30,7 +27,7 @@ function isPalindrome(word) {
         left++
         right--
     }
-    
+
     return true
 }
 
@@ -73,8 +70,8 @@ function twoNumberSum(array, targetSum) {
 console.log(twoNumberSum([9,1,3,4,5], 6)) // [1,5]
 console.log(twoNumberSum([1,2,3,4,5], 10)) // []
 ```
-This could be another valid solution:
 
+This could be another valid solution:
 
 Example 2:
 
@@ -92,7 +89,7 @@ function twoNumberSum(array, targetSum) {
 		const currentSum = sortedArray[leftLimit] + sortedArray[rightLimit]
 
 		if (currentSum === targetSum) return [sortedArray[leftLimit], sortedArray[rightLimit]]
-		else currentSum < targetSum ? leftLimit++ : rightLimit--        
+		else currentSum < targetSum ? leftLimit++ : rightLimit--
 	}
 
 	return []
@@ -104,7 +101,6 @@ console.log(twoNumberSum([1,2,3,4,5], 10)) // []
 ```
 
 And this could be yet another valid solution:
-
 
 Example 3:
 
@@ -149,7 +145,6 @@ Big O is a standardized method to analyze and compare the complexity (in terms o
 
 There're are a lot of different possible complexities an algorithm can have, but the most common ones are the following:
 
-
 **Constant — O(1):** When the number of operations/space required is always the same independently from the input. Take for example a function that takes a number as input and returns that number minus 10. No matter if you give it 100 or 1000000 as input, that function will always perform a single operation (rest 10), so the complexity is constant O(1).
 
 **Logarithmic — O(log n):** When the number of operations/space required grows at an increasingly slower rate compared to the growth of the input. This type of complexity is often found in algorithms that take a divide and conquer approach or in search algorithms. The classic example is binary search, in which the dataset you have to go through continually halves until you reach the final result.
@@ -161,7 +156,6 @@ There're are a lot of different possible complexities an algorithm can have, but
 A graphic representation of classic algorithm complexities:
 
 ![Alt text](big-o-notation-complexity-chart.png?raw=true "Title")
-
 
 Note that the same notation is used when talking about both time and space complexity. Say for example we have a function that always creates an array with a single value no matter the input it receives, then the space complexity will be constant O(1), and so on with the other complexity types.
 
@@ -203,7 +197,6 @@ As the array isn’t ordered, we don’t have a way of knowing the approximate p
 
 Linear search is the approach used by many built-in JavaScript methods like indexOf, includes, and findIndex.
 
-
 ## Binary search
 
 When we have an ordered data structure, there’s a much more efficient approach we can take, binary search. What we do in binary search is the following:
@@ -211,7 +204,7 @@ When we have an ordered data structure, there’s a much more efficient approach
 - Select the middle value of our data structure and “ask”, is this the value we’re looking for?
 - If not, we “ask” whether the value we’re looking for is greater or less than the middle value?
 - If it’s greater, we “discard” all the values smaller than the mid value. If - it’s smaller, we “discard” all the values greater than the mid value.
-And then we repeat the same operation until we find the given value or the remaining "piece" of the data structure can't be divided anymore.
+  And then we repeat the same operation until we find the given value or the remaining "piece" of the data structure can't be divided anymore.
 
 ![Alt text](binary-search.png?raw=true "Title")
 
@@ -256,7 +249,7 @@ When sorting data structures, there are many possible approaches we can take. Le
 
 ## Bubble sort
 
-Bubble sort iterates through the data structure and compares one pair of values at a time. If the order of those values is incorrect, it swaps its positions to correct it. The iteration is repeated until the data is ordered. This algorithm makes bigger values “bubble” up to the end of the array. 
+Bubble sort iterates through the data structure and compares one pair of values at a time. If the order of those values is incorrect, it swaps its positions to correct it. The iteration is repeated until the data is ordered. This algorithm makes bigger values “bubble” up to the end of the array.
 
 This algorithm has a **Quadratic – O(n²)** complexity since it will compare each value with the rest of the values one time.
 
@@ -270,7 +263,7 @@ const arr = [3,2,1,4,6,5,7,9,8,10]
 const bubbleSort = arr => {
     // set a flag variable
     let noSwaps
-	
+
     // We will have a nested loop
     // with a pointer iterating from right to left
     for (let i = arr.length; i > 0; i--) {
@@ -313,10 +306,10 @@ A possible implementation could be the following:
 const arr = [3,2,1,4,6,5,7,9,8,10]
 
 const selectionSort = arr => {
-    
+
     for (let i = 0; i < arr.length; i++) {
         let lowest = i
-        
+
         for (let j = i+1; j < arr.length; j++) {
             if (arr[j] < arr[lowest]) {
                 lowest = j
@@ -352,29 +345,201 @@ The steps it takes are the following:
 
 A possible implementation could be the following:
 
-
-
 ```
 
 const arr = [3,2,1,4,6,5,7,9,8,10]
 
 const insertionSort = arr => {
     let currentVal
-    
+
     for (let i = 0; i < arr.length; i++) {
         currentVal = arr[i]
 
         for (var j = i-1; j >= 0 && arr[j] > currentVal; j--) {
             arr[j+1] = arr[j]
         }
-        
+
         arr[j+1] = currentVal
     }
-    
+
     return arr
 }
 
 insertionSort(arr)
 console.log(arr) // [1,2,3,4,5,6,7,8,9,10]
+
+```
+
+## Merge sort
+
+Merge sort is an algorithm that recursively decomposes the data structure into individual values, and then composes it again in a sorted way.
+
+The steps it takes are the following:
+
+- Recursively break up the data structure into halves until each “piece” has only one value.
+- Then, recursively merge the pieces in a sorted way until it gets back to the length of the original data structure.
+
+This algorithm has a **O(n log n)** complexity, since the decomposition part of it has a complexity of **log n** and the comparison part of it has a complexity of **n**.
+
+![Alt text](merge-sort.png?raw=true "Title")
+
+A possible implementation could be the following:
+
+```
+
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+// Merge function
+const merge = (arr1, arr2) => {
+    const results = []
+    let i = 0
+    let j = 0
+
+    while (i < arr1.length && j < arr2.length) {
+        if (arr2[j] > arr1[i]) {
+            results.push(arr1[i])
+            i++
+        } else {
+            results.push(arr2[j])
+            j++
+        }
+    }
+
+    while (i < arr1.length) {
+        results.push(arr1[i])
+        i++
+    }
+
+    while (j < arr2.length) {
+        results.push(arr2[j])
+        j++
+    }
+
+    return results
+}
+
+const mergeSort = arr => {
+    if (arr.length <= 1) return arr
+    let mid = Math.floor(arr.length/2)
+    let left = mergeSort(arr.slice(0,mid))
+    let right = mergeSort(arr.slice(mid))
+    return merge(left, right)
+}
+
+console.log(mergeSort(arr)) // [1,2,3,4,5,6,7,8,9,10]
+
+```
+
+## Quick sort
+
+Quick sort works by selecting one element (called “the pivot”) and finding the index where the pivot should end up in the sorted array.
+
+The runtime of quicksort depends in part on how the pivot is selected. Ideally, it should be roughly the median value of the dataset being sorted.
+
+The steps the algorithm takes are the following:
+
+- Identify the pivot value and place it in the index it should be.
+- Recursively execute the same process on each “half” of the data structure.
+
+This algorithm has a **O(n log n)** complexity.
+
+![Alt text](quick-sort.png?raw=true "Title")
+
+A possible implementation could be the following:
+
+```
+
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+const pivot = (arr, start = 0, end = arr.length - 1) => {
+    const swap = (arr, idx1, idx2) => [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]]
+
+    let pivot = arr[start]
+    let swapIdx = start
+
+    for (let i = start+1; i <= end; i++) {
+        if (pivot > arr[i]) {
+            swapIdx++
+            swap(arr, swapIdx, i)
+        }
+    }
+
+    swap(arr, start, swapIdx)
+    return swapIdx
+}
+
+const quickSort = (arr, left = 0, right = arr.length - 1) => {
+    if (left < right) {
+        let pivotIndex = pivot(arr, left, right)
+        quickSort(arr, left, pivotIndex-1)
+        quickSort(arr, pivotIndex+1, right)
+    }
+
+    return arr
+}
+
+console.log(quickSort(arr)) // [1,2,3,4,5,6,7,8,9,10]
+
+```
+
+## Radix sort
+
+Radix is an algorithm that works in a different way than the ones seen before, in the sense that it doesn’t compare values. Radix is used to sort lists of numbers, and to do so it exploits the fact that the size of a number is defined by the number of digits it has (the more digits, the bigger the number).
+
+What radix does is to sort values by their digits in order. It first sorts all values by the first digit, then again by the second, then by the third… This process is repeated as many times as the number of digits the biggest number in the list has. And by the end of this process, the algorithm returns the fully sorted list.
+
+The steps it takes are the following:
+
+- Figure how many digits the largest number has.
+- Loop through the list up to the largest number of digits. In every iteration:
+- Create “buckets” for each digit (from 0 to 9) and place each value in its corresponding bucket according to the digit being evaluated.
+- Replace the existing list with the values sorted in the buckets, starting from 0 and going up to 9.
+
+This algorithm has a **O(n\*k)** complexity, k being the number of digits the largest number has. Given that it doesn’t compare values with each other, this algorithm has a better runtime than the ones seen before, but will only work on lists of numbers.
+
+If we want a data agnostic sorting algorithm, we would probably go with any of the previous ones.
+
+![Alt text](radix-sort.jpg?raw=true "Title")
+![Alt text](radix-sort-digit.jpg?raw=true "Title")
+
+A possible implementation could be the following:
+
+```
+
+const arr = [3,2,1,4,6,5,7,9,8,10]
+
+const getDigit = (num, i) => Math.floor(Math.abs(num) / Math.pow(10, i)) % 10
+
+const digitCount = num => {
+    if (num === 0) return 1
+    return Math.floor(Math.log10(Math.abs(num))) + 1
+}
+
+const mostDigits = nums => {
+    let maxDigits = 0
+
+    for (let i = 0; i < nums.length; i++) maxDigits = Math.max(maxDigits, digitCount(nums[i]))
+
+    return maxDigits
+}
+
+const radixSort = nums => {
+    let maxDigitCount = mostDigits(nums)
+
+    for (let k = 0; k < maxDigitCount; k++) {
+        let digitBuckets = Array.from({ length: 10 }, () => [])
+
+        for (let i = 0; i < nums.length; i++) {
+            let digit = getDigit(nums[i], k)
+            digitBuckets[digit].push(nums[i])
+        }
+
+        nums = [].concat(...digitBuckets)
+    }
+
+    return nums
+}
+
+console.log(radixSort(arr)) // [1,2,3,4,5,6,7,8,9,10]
 
 ```
